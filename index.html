@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Thunder Wheels | Bike and scooter rentals in Mumbai</title>
+  <meta name="description" content="Bike and scooter rentals in Mumbai by the day. Roadsters, cruisers, adventure bikes and scooters. Pick your dates, see the price, book on WhatsApp.">
+  <meta name="theme-color" content="#ffc629">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231b1e22'/%3E%3Cpath d='M36 6 16 36h14l-4 22 22-32H34z' fill='%23ffc629'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#bikes">Skip to bikes</a>
+
+  <!-- ============ TOP BAR ============ -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top" aria-label="Thunder Wheels, back to top">
+        <svg class="bolt" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 1 4 14h6.5L9 23l11-14h-7z"/></svg>
+        <span>Thunder Wheels</span>
+      </a>
+      <nav class="topnav" aria-label="Main">
+        <a href="#bikes">Bikes</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">Questions</a>
+        <a href="#find-us">Find us</a>
+      </nav>
+      <div class="topbar-actions">
+        <a class="call-link" data-phone href="#">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg>
+          <span data-phone-text></span>
+        </a>
+        <button type="button" class="btn btn-ink btn-sm" data-open-booking>Book a bike</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="hero-kicker">
+            <svg class="pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+            Self-drive bike rentals in Mumbai
+          </p>
+          <h1 id="hero-title">Rent a bike in Mumbai.</h1>
+          <p class="lede">Roadsters, cruisers and adventure bikes for the open road, and a scooter for the city. Pick your dates to see the price, then book on WhatsApp.</p>
+
+          <ul class="hero-points">
+            <li>Rates from <strong>₹500 a day</strong></li>
+            <li>Serviced and checked before every ride</li>
+            <li>Reply on WhatsApp, no calls needed</li>
+          </ul>
+        </div>
+
+        <figure class="hero-photo" data-hero-carousel aria-roledescription="carousel" aria-label="Bikes for rent">
+          <div class="hero-slides">
+            <img class="is-active" src="images/classic-350.jpg" alt="Royal Enfield Classic 350" width="1280" height="960" fetchpriority="high">
+          </div>
+          <figcaption class="plate plate-hero" aria-live="polite">
+            <span class="plate-small" data-hero-name>Classic 350</span>
+            <span><span data-hero-price>₹1,800</span><span class="plate-unit">/day</span></span>
+          </figcaption>
+          <div class="hero-controls">
+            <div class="hero-dots" data-hero-dots></div>
+          </div>
+        </figure>
+      </div>
+
+      <!-- Date bar -->
+      <div class="wrap">
+        <form class="datebar" id="datebar" aria-labelledby="datebar-title" novalidate>
+          <p class="datebar-title" id="datebar-title">When do you need the bike?</p>
+          <div class="datebar-fields">
+            <fieldset class="dt">
+              <legend>Pickup</legend>
+              <div class="dt-inputs">
+                <label class="sr-only" for="bar-pdate">Pickup date</label>
+                <input type="date" id="bar-pdate" data-key="pDate" required>
+                <label class="sr-only" for="bar-ptime">Pickup time</label>
+                <input type="time" id="bar-ptime" data-key="pTime" step="1800" required>
+              </div>
+            </fieldset>
+            <span class="dt-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <fieldset class="dt">
+              <legend>Return</legend>
+              <div class="dt-inputs">
+                <label class="sr-only" for="bar-rdate">Return date</label>
+                <input type="date" id="bar-rdate" data-key="rDate" required>
+                <label class="sr-only" for="bar-rtime">Return time</label>
+                <input type="time" id="bar-rtime" data-key="rTime" step="1800" required>
+              </div>
+            </fieldset>
+            <div class="datebar-go">
+              <p class="duration" data-duration aria-live="polite">1 day</p>
+              <button type="submit" class="btn btn-ink">See prices</button>
+            </div>
+          </div>
+          <p class="datebar-error" data-date-error role="alert" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ FLEET ============ -->
+    <section class="section fleet-section" id="bikes" aria-labelledby="bikes-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2 id="bikes-title">Pick your bike</h2>
+            <p class="section-sub" data-trip-summary aria-live="polite"></p>
+          </div>
+          <div class="filters" role="group" aria-label="Filter bikes">
+            <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-filter="scooter" aria-pressed="false">Scooter</button>
+            <button type="button" class="chip" data-filter="350" aria-pressed="false">350cc</button>
+            <button type="button" class="chip" data-filter="adventure" aria-pressed="false">Adventure</button>
+            <label class="chip chip-check">
+              <input type="checkbox" id="only-available">
+              <span>Available only</span>
+            </label>
+          </div>
+        </div>
+
+        <ul class="fleet" id="fleet"></ul>
+      </div>
+    </section>
+
+    <!-- ============ CARE ============ -->
+    <section class="section care" id="care" aria-labelledby="care-title">
+      <div class="wrap">
+        <div class="care-head">
+          <h2 id="care-title">Bikes we look after</h2>
+          <p class="section-sub">A rental is only as good as its upkeep. Every bike in our fleet is maintained properly, so all you have to think about is the road.</p>
+        </div>
+        <ul class="care-grid">
+          <li>
+            <span class="care-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a1.4 1.4 0 0 0 2 2l6-6a4 4 0 0 0 5.4-5.4l-2.4 2.4-2-2 2.4-2.4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+            <h3>Serviced on schedule</h3>
+            <p>Regular servicing, oil changes and part replacements, on time, every time.</p>
+          </li>
+          <li>
+            <span class="care-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 4h6v2H9zM7 5H5v16h14V5h-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m9 13 2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3>Checked before every ride</h3>
+            <p>Brakes, tyres, chain, lights and fluids are checked before the bike goes out.</p>
+          </li>
+          <li>
+            <span class="care-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.4 6 10.5A6 6 0 0 1 6 13.5C6 9.4 12 3 12 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+            <h3>Clean and ready</h3>
+            <p>Washed and ready when you arrive, so you can ride straight out.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="section how" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <h2 id="how-title">Booking takes a minute</h2>
+        <ol class="steps">
+          <li>
+            <h3>Choose dates and a bike</h3>
+            <p>Set your pickup and return time above. Every bike shows the total for your dates.</p>
+          </li>
+          <li>
+            <h3>Send it on WhatsApp</h3>
+            <p>Add your name and number. We get one message with everything we need, no back and forth.</p>
+          </li>
+          <li>
+            <h3>We confirm and you ride</h3>
+            <p>We check the bike is free, reply with the final price and pickup details, and keep it ready.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq" aria-labelledby="faq-title">
+      <div class="wrap faq-wrap">
+        <div>
+          <h2 id="faq-title">Before you call</h2>
+          <p class="section-sub">Most answers are here. For anything else, WhatsApp is the fastest way to reach us.</p>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Do you have a scooty?</summary>
+            <p>Yes, the Honda Activa 6G at ₹500 a day. Choose your dates at the top of the page to see the total, then book it.</p>
+          </details>
+          <details>
+            <summary>Can you tell me the price on the phone?</summary>
+            <p>Day rates are on each bike. The total depends on how long you keep it, so pick your pickup and return time at the top of the page and the price shows on every bike.</p>
+          </details>
+          <details>
+            <summary>How are days counted?</summary>
+            <p>One day is 24 hours from pickup. The estimate counts every started 24 hours as a day. We confirm the exact amount when we reply.</p>
+          </details>
+          <details>
+            <summary>Is the bike free on my dates?</summary>
+            <p>The green and red tags show what's free right now. For your exact dates, send the booking and we'll confirm on WhatsApp.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FIND US ============ -->
+    <section class="section find" id="find-us" aria-labelledby="find-title">
+      <div class="wrap find-grid">
+        <div class="find-info">
+          <h2 id="find-title">Find us</h2>
+          <p class="section-sub">Pick up your bike from our office. Message us before you come so the bike is ready.</p>
+          <ul class="contact-cards">
+            <li>
+              <a class="contact-card" data-wa-general href="#" target="_blank" rel="noopener">
+                <span class="cc-icon cc-wa"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg></span>
+                <span><span class="cc-label">WhatsApp</span><span class="cc-value" data-phone-text></span></span>
+              </a>
+            </li>
+            <li>
+              <a class="contact-card" data-phone href="#">
+                <span class="cc-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg></span>
+                <span><span class="cc-label">Call</span><span class="cc-value" data-phone-text></span></span>
+              </a>
+            </li>
+            <li>
+              <a class="contact-card" data-email href="#">
+                <span class="cc-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m3 6 9 7 9-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+                <span><span class="cc-label">Email</span><span class="cc-value" data-email-text></span></span>
+              </a>
+            </li>
+          </ul>
+          <a class="btn btn-ink" href="https://www.google.com/maps/search/?api=1&amp;query=Thunder+Wheels+Motorcycle+Rentals" target="_blank" rel="noopener">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+            Get directions
+          </a>
+        </div>
+        <div class="map-frame">
+          <iframe title="Map showing the Thunder Wheels Motorcycle Rentals office" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4291.315400249096!2d72.99286351129072!3d19.069963082058848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c1aa9443bf93%3A0x2c409f1f6ad5140b!2sThunder%20Wheels%20Motorcycle%20Rentals!5e1!3m2!1sen!2sin!4v1793353135352!5m2!1sen!2sin" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" aria-labelledby="cta-title">
+      <div class="wrap cta-inner">
+        <div>
+          <h2 id="cta-title">Not sure which bike to take?</h2>
+          <p>Send us your dates and where you're headed. We'll suggest one.</p>
+        </div>
+        <a class="btn btn-wa btn-lg" data-wa-general href="#" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+          Ask on WhatsApp
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div class="brand">
+        <svg class="bolt" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 1 4 14h6.5L9 23l11-14h-7z"/></svg>
+        <span>Thunder Wheels</span>
+      </div>
+      <p class="footer-line">Bike and scooter rentals, Mumbai</p>
+      <p class="footer-links">
+        <a data-phone href="#"><span data-phone-text></span></a>
+        <a data-email href="#"><span data-email-text></span></a>
+      </p>
+      <details class="credits">
+        <summary>Photo credits</summary>
+        <ul>
+          <li>Activa 6G: <a href="https://commons.wikimedia.org/wiki/File:Honda_Activa_6G.jpg" target="_blank" rel="noopener">Alka</a>, CC BY-SA 4.0</li>
+          <li>Hunter 350: <a href="https://commons.wikimedia.org/wiki/File:Hunter_350_side_view_India_Model.png" target="_blank" rel="noopener">Pintu dasaundhi</a>, CC BY-SA 4.0</li>
+          <li>Classic 350: <a href="https://commons.wikimedia.org/wiki/File:Royal_Enfield_Classic_350_(2017_Model_Year).jpg" target="_blank" rel="noopener">Samihasib</a>, CC BY-SA 4.0</li>
+          <li>Meteor 350: <a href="https://commons.wikimedia.org/wiki/File:Royal_Enfield_Meteor_2021-3.jpg" target="_blank" rel="noopener">UliBe43</a>, CC0</li>
+          <li>Himalayan 411: <a href="https://commons.wikimedia.org/wiki/File:Royal_Enfield_Himalyana_DB2K5445.jpg" target="_blank" rel="noopener">Ashley Pomeroy</a>, CC0</li>
+          <li>Himalayan 450: <a href="https://commons.wikimedia.org/wiki/File:Royal_Enfield_Himalayan_450_Mana_Black.jpg" target="_blank" rel="noopener">MotorideSA</a>, CC BY-SA 4.0</li>
+        </ul>
+      </details>
+      <p class="made-by">Designed by <a href="https://cloverstudio.art" target="_blank" rel="noopener">Clover Studio</a></p>
+    </div>
+  </footer>
+
+  <!-- ============ MOBILE BOTTOM BAR ============ -->
+  <div class="mbar" aria-label="Quick actions">
+    <a class="btn btn-ghost-light" data-phone href="#">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg>
+      Call
+    </a>
+    <button type="button" class="btn btn-wa" data-open-booking>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+      Book on WhatsApp
+    </button>
+  </div>
+
+  <!-- Desktop floating WhatsApp -->
+  <a class="wa-float" data-wa-general href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+  </a>
+
+  <!-- ============ BOOKING SHEET ============ -->
+  <dialog class="sheet" id="booking" aria-labelledby="sheet-title">
+    <form class="sheet-form" id="booking-form" novalidate>
+      <header class="sheet-head">
+        <div class="sheet-bike">
+          <div class="sheet-thumb" data-sheet-thumb></div>
+          <div>
+            <p class="sheet-kicker">Booking request</p>
+            <h2 id="sheet-title" data-sheet-title>Choose a bike</h2>
+          </div>
+        </div>
+        <button type="button" class="icon-btn" data-close aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </button>
+      </header>
+
+      <div class="sheet-body">
+        <div class="field">
+          <label for="bike">Bike</label>
+          <select id="bike" name="bike" required></select>
+          <p class="field-note" id="bike-note" hidden></p>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="f-pdate">Pickup date</label>
+            <input type="date" id="f-pdate" data-key="pDate" required>
+          </div>
+          <div class="field">
+            <label for="f-ptime">Pickup time</label>
+            <input type="time" id="f-ptime" data-key="pTime" step="1800" required>
+          </div>
+          <div class="field">
+            <label for="f-rdate">Return date</label>
+            <input type="date" id="f-rdate" data-key="rDate" required>
+          </div>
+          <div class="field">
+            <label for="f-rtime">Return time</label>
+            <input type="time" id="f-rtime" data-key="rTime" step="1800" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="fullname" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="phone">Mobile number</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="10-digit number" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="area">Where are you riding? <span class="opt">(optional)</span></label>
+          <input type="text" id="area" name="area" placeholder="e.g. city rides, Lonavala, Alibaug">
+        </div>
+
+        <div class="field">
+          <label for="message">Anything else? <span class="opt">(optional)</span></label>
+          <textarea id="message" name="message" rows="2" placeholder="Trip plan, extra helmet, number of riders…"></textarea>
+        </div>
+      </div>
+
+      <footer class="sheet-foot">
+        <div class="estimate" aria-live="polite">
+          <div>
+            <p class="est-label">Estimated rent</p>
+            <p class="est-detail" data-est-detail>Choose a bike and dates</p>
+          </div>
+          <p class="plate plate-lg" data-est-total>₹ —</p>
+        </div>
+        <p class="form-error" data-form-error role="alert" hidden></p>
+        <div class="sheet-actions">
+          <button type="submit" class="btn btn-wa" data-channel="whatsapp">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+            Send on WhatsApp
+          </button>
+          <button type="submit" class="btn btn-ghost" data-channel="email">Send by email</button>
+        </div>
+        <p class="fine">This is an estimate. We confirm the final price and availability when we reply.</p>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Shared icon -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1a17 17 0 0 1-1.7-.6c-3-1.3-5-4.3-5.1-4.5-.2-.2-1.2-1.6-1.2-3s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.6 2.1 1.1 1 2 1.3 2.3 1.4.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.4Z"/></symbol>
+  </svg>
+
+  <script src="bikes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
