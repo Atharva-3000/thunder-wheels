@@ -44,10 +44,12 @@
 
   /* ---------- Contact links ---------- */
   var GENERAL_WA_TEXT =
-    "Hi Thunder Wheels, I want to rent a bike.\n" +
-    "Bike: \n" +
-    "Pickup date & time: \n" +
-    "Return date & time: ";
+    "Hi Thunder Wheels, I'd like to book a bike.\n\n" +
+    "Bike: \n\n" +
+    "Pickup Date : \n" +
+    "Pickup Time : \n\n" +
+    "Drop Off Date : \n" +
+    "Drop Off Time : ";
   function waLink(text) { return "https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(text); }
 
   $$("[data-wa-general]").forEach(function (a) { a.href = waLink(GENERAL_WA_TEXT); });
@@ -65,9 +67,11 @@
     return d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" }) + ", " +
       d.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true }).replace(":00", "");
   }
-  function fmtLong(d) {
-    return d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric" }) + ", " +
-      d.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true });
+  function fmtDate(d) {
+    return d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+  }
+  function fmtTime(d) {
+    return d.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true });
   }
 
   var today = isoDate(new Date());
@@ -284,27 +288,28 @@
     if (phone.length !== 10) return fail("Enter a 10-digit mobile number.", phoneEl);
 
     var area = $("#area").value.trim(), note = $("#message").value.trim();
-    var lines = SHOW_PRICES ? [
+    var lines = (SHOW_PRICES ? [
       "Hi Thunder Wheels, I'd like to book a bike.",
       "",
       "Bike: " + b.name + " (" + rupees(b.price) + "/day)",
-      "Pickup: " + fmtLong(t.start),
-      "Return: " + fmtLong(t.end),
-      "Estimate: " + dayWord(t.days) + " = " + rupees(b.price * t.days),
-      "",
-      "Name: " + name,
-      "Mobile: " + phone
+      "Duration: " + dayWord(t.days),
+      "Estimate: " + rupees(b.price * t.days)
     ] : [
       "Hi Thunder Wheels, I'd like to book a bike. Please send me a quote.",
       "",
       "Bike: " + b.name,
-      "Pickup: " + fmtLong(t.start),
-      "Return: " + fmtLong(t.end),
-      "Duration: " + dayWord(t.days),
+      "Duration: " + dayWord(t.days)
+    ]).concat([
+      "",
+      "Pickup Date : " + fmtDate(t.start),
+      "Pickup Time : " + fmtTime(t.start),
+      "",
+      "Drop Off Date : " + fmtDate(t.end),
+      "Drop Off Time : " + fmtTime(t.end),
       "",
       "Name: " + name,
       "Mobile: " + phone
-    ];
+    ]);
     if (area) lines.push("Riding to: " + area);
     if (note) lines.push("Note: " + note);
     var text = lines.join("\n");
