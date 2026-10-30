@@ -64,7 +64,7 @@ const BIKES = [
     price: 1800,
     image: "images/meteor-350.jpg",
     kind: "bike",
-    available: false
+    available: true
   },
   {
     id: "himalayan-411",
