@@ -94,6 +94,13 @@ const BIKES = [
   }
 ];
 
+/* Prices
+   showPrices: false -> day rates and totals are hidden; visitors ask for a quote
+   showPrices: true  -> each bike shows its day rate and the total for the dates */
+const SETTINGS = {
+  showPrices: false
+};
+
 /* Contact details used by every button on the site */
 const CONTACT = {
   whatsapp: "919664097074",          // country code + number, no + or spaces

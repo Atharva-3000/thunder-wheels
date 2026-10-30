@@ -14,6 +14,12 @@ Plain HTML, CSS and JavaScript. No install, no build. Open `index.html` in a bro
 
 Open `bikes.js` and change `available: true` to `available: false` (or back). Save and upload the file again.
 
+## Show or hide prices
+
+Prices are hidden right now: visitors pick dates and a bike and ask for a quote on WhatsApp. The hero still says "Rates from ₹500 a day" (edit that line in `index.html` if it changes).
+
+To show day rates and trip totals on every bike again, open `bikes.js` and set `showPrices: true`.
+
 ## Change a price or description
 
 In `bikes.js`, change `price: 1700` to the new day rate, or edit the `note` text.
@@ -37,11 +43,11 @@ If a photo is missing, the site shows a simple drawing of a bike or scooter inst
 
 ## How booking works
 
-1. The visitor sets pickup and return date and time in the bar under the hero. Every bike then shows the total for those dates.
+1. The visitor sets pickup and return date and time in the bar under the hero.
 2. They press **Book** on a bike. A booking form slides up with the bike and dates already filled in.
-3. They add name and mobile and press **Send on WhatsApp**. WhatsApp opens with the bike, dates, estimate, name and number typed out, addressed to +91 96640 97074. **Send by email** does the same to thunderwheels2017@gmail.com.
+3. They add name and mobile and press **Send on WhatsApp**. WhatsApp opens with the bike, dates, how many days, name and number typed out (plus the estimate, when prices are switched on), addressed to +91 96640 97074. **Send by email** does the same to thunderwheels2017@gmail.com.
 
-No server is needed. The estimate counts every started 24 hours as one day × the day rate. The browser remembers the visitor's dates if they come back.
+No server is needed. Every started 24 hours counts as one day. The browser remembers the visitor's dates if they come back.
 
 ## Map
 

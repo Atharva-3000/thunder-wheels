@@ -7,6 +7,7 @@
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
   var reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SHOW_PRICES = typeof SETTINGS !== "undefined" && !!SETTINGS.showPrices;
 
   /* ---------- Drawings shown if a photo is missing ---------- */
   var DRAWINGS = {
@@ -144,11 +145,20 @@
     list.forEach(function (b) {
       var li = document.createElement("li");
       li.className = "bike" + (b.available ? "" : " is-out");
+      var priceRow;
       var total = t.ok && t.days === 1
         ? '<div class="bike-total"><span>for 24 hours</span></div>'
         : t.ok
         ? '<div class="bike-total"><strong>' + rupees(b.price * t.days) + "</strong><span>for " + dayWord(t.days) + "</span></div>"
         : '<div class="bike-total"><span>Pick dates to see the total</span></div>';
+      priceRow = SHOW_PRICES
+        ? '<div class="bike-price">' +
+            '<p class="plate" aria-label="' + rupees(b.price) + ' per day">' + "<span>" + rupees(b.price) + '<span class="plate-unit">/day</span></span></p>' +
+            total +
+          "</div>"
+        : '<div class="bike-price"><p class="bike-quote">' +
+            (t.ok ? "Quote for <strong>" + dayWord(t.days) + "</strong> on WhatsApp" : "Price on request") +
+          "</p></div>";
       li.innerHTML =
         '<div class="bike-photo"><span class="status ' + (b.available ? "ok" : "out") + '">' +
           (b.available ? "Available" : "Booked out") + "</span></div>" +
@@ -156,10 +166,7 @@
           '<p class="bike-meta">' + b.type + " &nbsp;/&nbsp; " + b.cc + "</p>" +
           "<h3>" + b.short + "</h3>" +
           '<p class="bike-note">' + b.note + "</p>" +
-          '<div class="bike-price">' +
-            '<p class="plate" aria-label="' + rupees(b.price) + ' per day">' + "<span>" + rupees(b.price) + '<span class="plate-unit">/day</span></span></p>' +
-            total +
-          "</div>" +
+          priceRow +
           '<button type="button" class="btn ' + (b.available ? "btn-ink" : "btn-ghost") + '" data-book="' + b.id + '">' +
             (b.available ? "Book " + b.short : "Ask about other dates") +
           "</button>" +
@@ -192,11 +199,12 @@
   var sheetThumb = $("[data-sheet-thumb]");
   var estTotal = $("[data-est-total]");
   var estDetail = $("[data-est-detail]");
+  var estLabel = $("[data-est-label]");
   var formErr = $("[data-form-error]");
   var lastFocus = null;
 
   bikeSel.innerHTML = '<option value="">Choose a bike</option>' + BIKES.map(function (b) {
-    return '<option value="' + b.id + '">' + b.name + " (" + rupees(b.price) + "/day)" + (b.available ? "" : " – booked out") + "</option>";
+    return '<option value="' + b.id + '">' + b.name + (SHOW_PRICES ? " (" + rupees(b.price) + "/day)" : "") + (b.available ? "" : " – booked out") + "</option>";
   }).join("");
 
   function selectedBike() { return BIKES.filter(function (b) { return b.id === bikeSel.value; })[0] || null; }
@@ -207,12 +215,16 @@
     sheetThumb.innerHTML = "";
     if (b) photoInto(sheetThumb, b);
 
-    if (b && t.ok) {
+    estLabel.textContent = SHOW_PRICES ? "Estimated rent" : "Your rental";
+    if (SHOW_PRICES && b && t.ok) {
       estTotal.textContent = rupees(b.price * t.days);
       estDetail.textContent = dayWord(t.days) + " × " + rupees(b.price);
+    } else if (!SHOW_PRICES && t.ok) {
+      estTotal.textContent = dayWord(t.days);
+      estDetail.textContent = fmtShort(t.start) + " to " + fmtShort(t.end);
     } else {
-      estTotal.textContent = "₹ —";
-      estDetail.textContent = !b ? "Choose a bike to see the price" : t.msg;
+      estTotal.textContent = SHOW_PRICES ? "₹ —" : "—";
+      estDetail.textContent = !t.ok ? t.msg : "Choose a bike to see the price";
     }
 
     bikeNote.hidden = !(b && !b.available);
@@ -272,13 +284,23 @@
     if (phone.length !== 10) return fail("Enter a 10-digit mobile number.", phoneEl);
 
     var area = $("#area").value.trim(), note = $("#message").value.trim();
-    var lines = [
+    var lines = SHOW_PRICES ? [
       "Hi Thunder Wheels, I'd like to book a bike.",
       "",
       "Bike: " + b.name + " (" + rupees(b.price) + "/day)",
       "Pickup: " + fmtLong(t.start),
       "Return: " + fmtLong(t.end),
       "Estimate: " + dayWord(t.days) + " = " + rupees(b.price * t.days),
+      "",
+      "Name: " + name,
+      "Mobile: " + phone
+    ] : [
+      "Hi Thunder Wheels, I'd like to book a bike. Please send me a quote.",
+      "",
+      "Bike: " + b.name,
+      "Pickup: " + fmtLong(t.start),
+      "Return: " + fmtLong(t.end),
+      "Duration: " + dayWord(t.days),
       "",
       "Name: " + name,
       "Mobile: " + phone
@@ -304,9 +326,9 @@
     dateErr.hidden = t.ok || !state.pDate || !state.rDate;
     if (!t.ok) dateErr.textContent = t.msg;
     tripSummary.innerHTML = t.ok
-      ? "Prices for <strong>" + fmtShort(t.start) + "</strong> to <strong>" + fmtShort(t.end) + "</strong> (" + dayWord(t.days) + "). " +
+      ? (SHOW_PRICES ? "Prices for <strong>" : "Your dates: <strong>") + fmtShort(t.start) + "</strong> to <strong>" + fmtShort(t.end) + "</strong> (" + dayWord(t.days) + "). " +
         '<button type="button" data-change-dates>Change dates</button>'
-      : "Rent is per day (24 hours). Pick your dates above to see totals.";
+      : (SHOW_PRICES ? "Rent is per day (24 hours). Pick your dates above to see totals." : "Pick your dates above, then choose a bike.");
     renderFleet();
     if (sheet.open) updateSheet();
   }
@@ -325,8 +347,8 @@
     root.style.setProperty("--hero-delay", DELAY + "ms");
 
     var stage = $(".hero-slides", root);
-    var nameEl = $("[data-hero-name]", root);
-    var priceEl = $("[data-hero-price]", root);
+    var smallEl = $("[data-hero-small]", root);
+    var bigEl = $("[data-hero-big]", root);
     var dotsEl = $("[data-hero-dots]", root);
     var first = $("img", stage);
 
@@ -368,8 +390,13 @@
       dots[idx].setAttribute("aria-current", "true");
 
       var b = order[idx];
-      nameEl.textContent = b.short;
-      priceEl.textContent = rupees(b.price);
+      if (SHOW_PRICES) {
+        smallEl.textContent = b.short;
+        bigEl.innerHTML = rupees(b.price) + '<span class="plate-unit">/day</span>';
+      } else {
+        smallEl.textContent = b.type + " / " + b.cc;
+        bigEl.textContent = b.short;
+      }
       root.classList.remove("swap");
       void root.offsetWidth;
       root.classList.add("swap");
