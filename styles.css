@@ -271,8 +271,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
 .bike-total strong { display: block; font: 700 1.5rem/1 var(--display); letter-spacing: .02em; }
 .bike-total span { font-size: .8125rem; color: var(--muted); }
 .bike .btn { margin-top: 16px; width: 100%; }
-.bike-quote { font-size: .9375rem; font-weight: 600; color: var(--muted); }
-.bike-quote strong { color: var(--ink); }
+.bike-note + .btn { margin-top: auto; }   /* no price row: keep the button at the bottom */
 
 .empty { grid-column: 1 / -1; padding: 48px 24px; text-align: center; color: var(--muted); background: var(--card); border-radius: var(--r-md); border: 1px dashed var(--line); }
 
@@ -286,6 +285,44 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
 .care-icon svg { width: 24px; height: 24px; }
 .care-grid h3 { font-size: 1.625rem; font-weight: 700; }
 .care-grid p { margin-top: 8px; color: var(--ink-soft); }
+
+/* ---------- Reviews ---------- */
+.reviews-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+.g-logo { width: 22px; height: 22px; flex: none; }
+.rating-card {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 14px 20px; border-radius: var(--r-md);
+  background: var(--card); border: 1px solid var(--line); text-decoration: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.rating-card:hover { border-color: var(--ink); box-shadow: var(--shadow); }
+.rating-card .g-logo { width: 30px; height: 30px; }
+.rating-num { font: 800 2.75rem/1 var(--display); }
+.rating-meta { display: flex; flex-direction: column; gap: 4px; }
+.rating-count { font-size: .875rem; font-weight: 600; color: var(--muted); }
+.stars { display: inline-flex; gap: 2px; color: #f5a623; }
+.stars svg { width: 18px; height: 18px; fill: currentColor; }
+.stars-sm svg { width: 15px; height: 15px; }
+.btn .stars { color: var(--taxi); }
+
+.review-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.review {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
+  padding: 26px 26px 22px; border-radius: var(--r-md);
+  background: var(--card); border: 1px solid var(--line);
+}
+.review blockquote { margin: 0; font-size: 1.1875rem; line-height: 1.5; font-weight: 500; }
+.review-src { display: flex; align-items: center; gap: 8px; font-size: .875rem; font-weight: 600; color: var(--muted); }
+.review-src .g-logo { width: 18px; height: 18px; }
+.reviews-actions { margin-top: 24px; display: flex; justify-content: center; }
+
+.leave-review {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  margin-top: 40px; padding: 28px 30px; border-radius: var(--r-lg);
+  background: var(--taxi);
+}
+.leave-review h3 { font-size: 2rem; font-weight: 800; text-transform: uppercase; }
+.leave-review p { margin-top: 6px; max-width: 36em; color: var(--ink-2); }
 
 /* ---------- How it works ---------- */
 .how { background: var(--ink); color: #fff; }
@@ -437,6 +474,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
   .care-head { grid-template-columns: 1fr; }
   .faq-wrap { grid-template-columns: 1fr; gap: 24px; }
   .find-grid { grid-template-columns: 1fr; gap: 28px; }
+  .review-grid { grid-template-columns: 1fr; }
   .map-frame { min-height: 320px; }
   .map-frame iframe { min-height: 308px; }
 }
@@ -462,7 +500,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
   .filters { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px; padding: 2px 16px 6px; scrollbar-width: none; }
   .filters::-webkit-scrollbar { display: none; }
   .chip { flex: none; }
-  .cta-inner .btn, .find-info .btn { width: 100%; }
+  .cta-inner .btn, .find-info .btn, .leave-review .btn, .reviews-actions .btn { width: 100%; }
+  .leave-review { padding: 22px 20px; }
+  .rating-card { width: 100%; }
   .footer-links { margin-left: 0; }
   .credits ul { columns: 1; }
 

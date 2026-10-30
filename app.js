@@ -159,9 +159,7 @@
             '<p class="plate" aria-label="' + rupees(b.price) + ' per day">' + "<span>" + rupees(b.price) + '<span class="plate-unit">/day</span></span></p>' +
             total +
           "</div>"
-        : '<div class="bike-price"><p class="bike-quote">' +
-            (t.ok ? "Quote for <strong>" + dayWord(t.days) + "</strong> on WhatsApp" : "Price on request") +
-          "</p></div>";
+        : "";
       li.innerHTML =
         '<div class="bike-photo"></div>' +
         '<div class="bike-body">' +
