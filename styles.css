@@ -305,15 +305,25 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
 .stars-sm svg { width: 15px; height: 15px; }
 .btn .stars { color: var(--taxi); }
 
-.review-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.review-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .review {
-  display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
-  padding: 26px 26px 22px; border-radius: var(--r-md);
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 22px 22px 24px; border-radius: var(--r-md);
   background: var(--card); border: 1px solid var(--line);
 }
-.review blockquote { margin: 0; font-size: 1.1875rem; line-height: 1.5; font-weight: 500; }
-.review-src { display: flex; align-items: center; gap: 8px; font-size: .875rem; font-weight: 600; color: var(--muted); }
-.review-src .g-logo { width: 18px; height: 18px; }
+.review-top { display: flex; align-items: center; gap: 12px; }
+.avatar {
+  width: 42px; height: 42px; flex: none; display: grid; place-items: center;
+  border-radius: 50%; background: var(--av, #5f6368); color: #fff;
+  font: 600 1.125rem/1 var(--body);
+}
+.review-who { flex: 1; min-width: 0; }
+.review-name { font-weight: 700; line-height: 1.2; }
+.review-stars { margin-top: 3px; line-height: 0; }
+.review-stars .stars svg { width: 15px; height: 15px; }
+.review-top .g-logo { width: 20px; height: 20px; align-self: flex-start; }
+.review blockquote { margin: 0; font-size: 1.0625rem; line-height: 1.55; font-weight: 500; }
+.review-ctx { margin-top: auto; font-size: .875rem; font-weight: 600; color: var(--muted); }
 .reviews-actions { margin-top: 24px; display: flex; justify-content: center; }
 
 .leave-review {
@@ -458,6 +468,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
 /* ---------- Responsive ---------- */
 @media (max-width: 1020px) {
   .topnav { display: none; }
+  .review-grid { grid-template-columns: repeat(2, 1fr); }
   .datebar-fields { grid-template-columns: 1fr 1fr; }
   .dt-arrow { display: none; }
   .datebar-go { grid-column: 1 / -1; justify-content: space-between; }
