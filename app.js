@@ -131,24 +131,23 @@
 
   /* ---------- Fleet ---------- */
   var fleetEl = $("#fleet");
-  var onlyAvail = $("#only-available");
   var filter = "all";
 
   function renderFleet() {
     var t = trip();
     var list = BIKES.filter(function (b) {
-      return (filter === "all" || b.group === filter) && (!onlyAvail.checked || b.available);
+      return filter === "all" || b.group === filter;
     });
     fleetEl.innerHTML = "";
 
     if (!list.length) {
-      fleetEl.innerHTML = '<li class="empty">No bikes match that right now. Try another filter, or WhatsApp us your dates and we\'ll tell you what\'s free.</li>';
+      fleetEl.innerHTML = '<li class="empty">No bikes in this group. Try another filter, or WhatsApp us your dates and we\'ll suggest one.</li>';
       return;
     }
 
     list.forEach(function (b) {
       var li = document.createElement("li");
-      li.className = "bike" + (b.available ? "" : " is-out");
+      li.className = "bike";
       var priceRow;
       var total = t.ok && t.days === 1
         ? '<div class="bike-total"><span>for 24 hours</span></div>'
@@ -164,15 +163,14 @@
             (t.ok ? "Quote for <strong>" + dayWord(t.days) + "</strong> on WhatsApp" : "Price on request") +
           "</p></div>";
       li.innerHTML =
-        '<div class="bike-photo"><span class="status ' + (b.available ? "ok" : "out") + '">' +
-          (b.available ? "Available" : "Booked out") + "</span></div>" +
+        '<div class="bike-photo"></div>' +
         '<div class="bike-body">' +
           '<p class="bike-meta">' + b.type + " &nbsp;/&nbsp; " + b.cc + "</p>" +
           "<h3>" + b.short + "</h3>" +
           '<p class="bike-note">' + b.note + "</p>" +
           priceRow +
-          '<button type="button" class="btn ' + (b.available ? "btn-ink" : "btn-ghost") + '" data-book="' + b.id + '">' +
-            (b.available ? "Book " + b.short : "Ask about other dates") +
+          '<button type="button" class="btn btn-ink" data-book="' + b.id + '">' +
+            "Book " + b.short +
           "</button>" +
         "</div>";
       photoInto($(".bike-photo", li), b);
@@ -187,7 +185,6 @@
       renderFleet();
     });
   });
-  onlyAvail.addEventListener("change", renderFleet);
 
   fleetEl.addEventListener("click", function (e) {
     var btn = e.target.closest("[data-book]");
@@ -198,7 +195,6 @@
   var sheet = $("#booking");
   var form = $("#booking-form");
   var bikeSel = $("#bike");
-  var bikeNote = $("#bike-note");
   var sheetTitle = $("[data-sheet-title]");
   var sheetThumb = $("[data-sheet-thumb]");
   var estTotal = $("[data-est-total]");
@@ -208,7 +204,7 @@
   var lastFocus = null;
 
   bikeSel.innerHTML = '<option value="">Choose a bike</option>' + BIKES.map(function (b) {
-    return '<option value="' + b.id + '">' + b.name + (SHOW_PRICES ? " (" + rupees(b.price) + "/day)" : "") + (b.available ? "" : " – booked out") + "</option>";
+    return '<option value="' + b.id + '">' + b.name + (SHOW_PRICES ? " (" + rupees(b.price) + "/day)" : "") + "</option>";
   }).join("");
 
   function selectedBike() { return BIKES.filter(function (b) { return b.id === bikeSel.value; })[0] || null; }
@@ -231,8 +227,6 @@
       estDetail.textContent = !t.ok ? t.msg : "Choose a bike to see the price";
     }
 
-    bikeNote.hidden = !(b && !b.available);
-    if (b && !b.available) bikeNote.textContent = "This bike is booked out right now. Send anyway and we'll tell you when it's free, or pick another bike.";
   }
 
   function openBooking(id) {

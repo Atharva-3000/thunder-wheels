@@ -244,9 +244,6 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
 }
 .chip:hover { border-color: var(--ink); }
 .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--taxi); }
-.chip-check input { width: 18px; height: 18px; margin: 0; accent-color: var(--go); min-height: 0; }
-.chip-check:has(input:checked) { border-color: var(--go); background: var(--go-bg); color: var(--go); }
-.chip-check:focus-within { outline: 3px solid var(--ink); outline-offset: 2px; }
 
 /* ---------- Fleet ---------- */
 .fleet { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -260,18 +257,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
 .bike-photo { position: relative; aspect-ratio: 4 / 3; background: #e3e6e8; overflow: hidden; }
 .bike-photo img { width: 100%; height: 100%; object-fit: cover; }
 .bike-photo .drawing { width: 74%; height: 100%; margin: 0 auto; color: var(--ink-soft); }
-.bike.is-out .bike-photo img, .bike.is-out .bike-photo .drawing { filter: grayscale(1); opacity: .6; }
 
-.status {
-  position: absolute; top: 12px; left: 12px;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 10px; border-radius: 999px;
-  font-size: .8125rem; font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0,0,0,.12);
-}
-.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-.status.ok { background: var(--go-bg); color: var(--go); }
-.status.out { background: var(--stop-bg); color: var(--stop); }
 
 .bike-body { display: flex; flex-direction: column; flex: 1; padding: 18px 20px 20px; }
 .bike-meta { font-size: .875rem; font-weight: 600; color: var(--muted); }
@@ -287,7 +273,6 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
 .bike .btn { margin-top: 16px; width: 100%; }
 .bike-quote { font-size: .9375rem; font-weight: 600; color: var(--muted); }
 .bike-quote strong { color: var(--ink); }
-.bike.is-out .btn-ink { background: var(--card); color: var(--ink); border-color: var(--line); }
 
 .empty { grid-column: 1 / -1; padding: 48px 24px; text-align: center; color: var(--muted); background: var(--card); border-radius: var(--r-md); border: 1px dashed var(--line); }
 

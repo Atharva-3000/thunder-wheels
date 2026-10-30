@@ -113,7 +113,7 @@
       <div class="wrap">
         <div class="section-head">
           <div>
-            <h2 id="bikes-title">Pick your bike</h2>
+            <h2 id="bikes-title">Our fleet</h2>
             <p class="section-sub" data-trip-summary aria-live="polite"></p>
           </div>
           <div class="filters" role="group" aria-label="Filter bikes">
@@ -121,10 +121,6 @@
             <button type="button" class="chip" data-filter="scooter" aria-pressed="false">Scooter</button>
             <button type="button" class="chip" data-filter="350" aria-pressed="false">350cc</button>
             <button type="button" class="chip" data-filter="adventure" aria-pressed="false">Adventure</button>
-            <label class="chip chip-check">
-              <input type="checkbox" id="only-available">
-              <span>Available only</span>
-            </label>
           </div>
         </div>
 
@@ -174,7 +170,7 @@
           </li>
           <li>
             <h3>We confirm and you ride</h3>
-            <p>We check the bike is free, reply with your quote and pickup details, and keep it ready.</p>
+            <p>We reply with your quote and pickup details, and keep the bike ready.</p>
           </li>
         </ol>
       </div>
@@ -199,10 +195,6 @@
           <details>
             <summary>How are days counted?</summary>
             <p>One day is 24 hours from pickup. We'll confirm the exact rent for your dates when we reply.</p>
-          </details>
-          <details>
-            <summary>Is the bike free on my dates?</summary>
-            <p>The green and red tags show what's free right now. For your exact dates, send the booking and we'll confirm on WhatsApp.</p>
           </details>
         </div>
       </div>
@@ -324,7 +316,6 @@
         <div class="field">
           <label for="bike">Bike</label>
           <select id="bike" name="bike" required></select>
-          <p class="field-note" id="bike-note" hidden></p>
         </div>
 
         <div class="row">
@@ -384,7 +375,7 @@
           </button>
           <button type="submit" class="btn btn-ghost" data-channel="email">Send by email</button>
         </div>
-        <p class="fine">We reply on WhatsApp with the final price and confirm the bike is free.</p>
+        <p class="fine">We reply on WhatsApp with the final price for your dates.</p>
       </footer>
     </form>
   </dialog>

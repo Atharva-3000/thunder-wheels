@@ -3,9 +3,6 @@
   ------------------------------------------------------------
   This is the only file you need to edit day to day.
 
-  available: true   -> shows "Available" (green)
-  available: false  -> shows "Booked out" (red)
-
   price: rent per day in rupees
   group: which filter button the bike shows under
          ("scooter", "350", "adventure")
@@ -24,8 +21,7 @@ const BIKES = [
     note: "No gears, easy in traffic. Good for city errands and short hops.",
     price: 500,
     image: "images/activa-6g.jpg",
-    kind: "scooter",
-    available: true
+    kind: "scooter"
   },
   {
     id: "hunter-350",
@@ -37,8 +33,7 @@ const BIKES = [
     note: "The lightest Enfield. Quick through Mumbai traffic.",
     price: 1700,
     image: "images/hunter-350.jpg",
-    kind: "bike",
-    available: true
+    kind: "bike"
   },
   {
     id: "classic-350",
@@ -50,8 +45,7 @@ const BIKES = [
     note: "The classic Bullet look and thump. Made for weekend rides.",
     price: 1800,
     image: "images/classic-350.jpg",
-    kind: "bike",
-    available: true
+    kind: "bike"
   },
   {
     id: "meteor-350",
@@ -63,8 +57,7 @@ const BIKES = [
     note: "Low, relaxed seat. Easy on the back on long highway days.",
     price: 1800,
     image: "images/meteor-350.jpg",
-    kind: "bike",
-    available: true
+    kind: "bike"
   },
   {
     id: "himalayan-411",
@@ -76,8 +69,7 @@ const BIKES = [
     note: "Tall and tough. Ghats, broken roads, Konkan trips.",
     price: 2000,
     image: "images/himalayan-411.jpg",
-    kind: "bike",
-    available: true
+    kind: "bike"
   },
   {
     id: "himalayan-450",
@@ -89,8 +81,7 @@ const BIKES = [
     note: "The newest and most powerful bike we have. For long tours.",
     price: 2700,
     image: "images/himalayan-450.jpg",
-    kind: "bike",
-    available: true
+    kind: "bike"
   }
 ];
 

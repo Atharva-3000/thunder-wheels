@@ -6,13 +6,9 @@ Plain HTML, CSS and JavaScript. No install, no build. Open `index.html` in a bro
 
 - `index.html` – the page (hero, bikes, how it works, questions, map, footer, booking form)
 - `styles.css` – the look
-- `bikes.js` – **the bike list, prices, availability and contact numbers. This is the file you edit.**
+- `bikes.js` – **the bike list, prices and contact numbers. This is the file you edit.**
 - `app.js` – date picker, prices, filters and the WhatsApp / email booking
 - `images/` – bike photos
-
-## Mark a bike booked or free
-
-Open `bikes.js` and change `available: true` to `available: false` (or back). Save and upload the file again.
 
 ## Show or hide prices
 
