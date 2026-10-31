@@ -84,9 +84,9 @@
               <legend>Pickup</legend>
               <div class="dt-inputs">
                 <label class="sr-only" for="bar-pdate">Pickup date</label>
-                <input type="date" id="bar-pdate" data-key="pDate" required>
+                <input type="date" id="bar-pdate" data-key="pDate" autocomplete="off" required>
                 <label class="sr-only" for="bar-ptime">Pickup time</label>
-                <input type="time" id="bar-ptime" data-key="pTime" step="1800" required>
+                <input type="time" id="bar-ptime" data-key="pTime" autocomplete="off" step="1800" required>
               </div>
             </fieldset>
             <span class="dt-arrow" aria-hidden="true">
@@ -96,9 +96,9 @@
               <legend>Return</legend>
               <div class="dt-inputs">
                 <label class="sr-only" for="bar-rdate">Return date</label>
-                <input type="date" id="bar-rdate" data-key="rDate" required>
+                <input type="date" id="bar-rdate" data-key="rDate" autocomplete="off" required>
                 <label class="sr-only" for="bar-rtime">Return time</label>
-                <input type="time" id="bar-rtime" data-key="rTime" step="1800" required>
+                <input type="time" id="bar-rtime" data-key="rTime" autocomplete="off" step="1800" required>
               </div>
             </fieldset>
             <div class="datebar-go">
@@ -191,7 +191,7 @@
           </a>
         </div>
 
-        <ul class="review-grid">
+        <ul class="review-grid review-grid-photos">
           <li class="review has-photo">
             <figure class="review-photo"><img src="images/reviews/sarvesh-w.jpg" alt="Sarvesh on his rented Royal Enfield" width="1000" height="750" loading="lazy" decoding="async"></figure>
             <div class="review-top">
@@ -230,6 +230,8 @@
             <blockquote>“The owner is a bike enthusiast and very professional in dealing.”</blockquote>
             <p class="review-ctx">KTM Duke 200</p>
           </li>
+        </ul>
+        <ul class="review-grid review-grid-text">
           <li class="review" data-photo="images/reviews/sai-k.jpg" data-photo-alt="Photo from Sai K.'s ride">
             <div class="review-top">
               <span class="avatar" style="--av:#2b2b2b" aria-hidden="true">S</span>
@@ -450,19 +452,19 @@
         <div class="row">
           <div class="field">
             <label for="f-pdate">Pickup date</label>
-            <input type="date" id="f-pdate" data-key="pDate" required>
+            <input type="date" id="f-pdate" data-key="pDate" autocomplete="off" required>
           </div>
           <div class="field">
             <label for="f-ptime">Pickup time</label>
-            <input type="time" id="f-ptime" data-key="pTime" step="1800" required>
+            <input type="time" id="f-ptime" data-key="pTime" autocomplete="off" step="1800" required>
           </div>
           <div class="field">
             <label for="f-rdate">Return date</label>
-            <input type="date" id="f-rdate" data-key="rDate" required>
+            <input type="date" id="f-rdate" data-key="rDate" autocomplete="off" required>
           </div>
           <div class="field">
             <label for="f-rtime">Return time</label>
-            <input type="time" id="f-rtime" data-key="rTime" step="1800" required>
+            <input type="time" id="f-rtime" data-key="rTime" autocomplete="off" step="1800" required>
           </div>
         </div>
 

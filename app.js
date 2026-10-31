@@ -78,12 +78,9 @@
   var tomorrow = addDays(today, 1);
   var state = { pDate: tomorrow, pTime: "09:00", rDate: addDays(tomorrow, 1), rTime: "09:00" };
 
-  try {
-    var saved = JSON.parse(localStorage.getItem("tw-dates") || "null");
-    if (saved && saved.pDate >= today) state = saved;
-  } catch (e) {}
+  // Dates always start fresh on page load (nothing is remembered between visits)
+  try { localStorage.removeItem("tw-dates"); } catch (e) {}
 
-  function save() { try { localStorage.setItem("tw-dates", JSON.stringify(state)); } catch (e) {} }
 
   function trip() {
     var start = toDate(state.pDate, state.pTime), end = toDate(state.rDate, state.rTime);
@@ -110,7 +107,6 @@
       var k = el.getAttribute("data-key");
       state[k] = el.value;
       if (k === "pDate" && state.pDate && (!state.rDate || state.rDate < state.pDate)) state.rDate = addDays(state.pDate, 1);
-      save();
       syncDates(el);
       refresh();
     });
