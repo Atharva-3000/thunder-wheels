@@ -67,11 +67,16 @@
     return d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" }) + ", " +
       d.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true }).replace(":00", "");
   }
+  // Fixed formats so every WhatsApp message looks the same, whatever the browser:
+  // "Sun, 1 Nov 2026" and "10:00 AM"
+  var DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   function fmtDate(d) {
-    return d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+    return DAYS[d.getDay()] + ", " + d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear();
   }
   function fmtTime(d) {
-    return d.toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true });
+    var h = d.getHours(), m = d.getMinutes();
+    return ((h % 12) || 12) + ":" + pad(m) + (h < 12 ? " AM" : " PM");
   }
 
   var today = isoDate(new Date());
@@ -91,6 +96,34 @@
     return { ok: true, start: start, end: end, days: days };
   }
   function dayWord(n) { return n + (n === 1 ? " day" : " days"); }
+
+  /* Rentals run in 12-hour blocks: the return time is the pickup time,
+     or 12 hours after it, so every trip is a multiple of 12 hours. */
+  function plus12(time) {
+    var p = time.split(":");
+    return pad((Number(p[0]) + 12) % 24) + ":" + p[1];
+  }
+  function label12(time) {
+    var p = time.split(":"), h = Number(p[0]);
+    return ((h % 12) || 12) + ":" + p[1] + (h < 12 ? " AM" : " PM");
+  }
+  // Valid return times on the chosen return date, earliest first
+  function returnOptions() {
+    if (!state.pTime) return [];
+    var opts = [state.pTime, plus12(state.pTime)].sort();
+    if (state.rDate === state.pDate) opts = opts.filter(function (t) { return t > state.pTime; });
+    return opts;
+  }
+  function normaliseReturn() {
+    if (!state.pDate || !state.pTime) return;
+    if (!state.rDate || state.rDate < state.pDate) state.rDate = addDays(state.pDate, 1);
+    var opts = returnOptions();
+    if (!opts.length) { state.rDate = addDays(state.pDate, 1); opts = returnOptions(); }
+    if (opts.indexOf(state.rTime) < 0) {
+      // keep the trip as close as possible to what was picked: prefer the same time of day as pickup
+      state.rTime = opts.indexOf(state.pTime) >= 0 ? state.pTime : opts[0];
+    }
+  }
   // Actual trip length, e.g. "12 hours" or "1 day 12 hours" (part hours round up)
   function lengthWord(t) {
     var hours = Math.ceil((t.end - t.start) / 36e5 - 1e-9);
@@ -100,22 +133,29 @@
     return parts.join(" ");
   }
 
-  var dateInputs = $$("input[data-key]");
+  var dateInputs = $$("[data-key]");
   dateInputs.forEach(function (el) {
-    el.min = today;
+    if (el.tagName === "INPUT") el.min = today;
     el.addEventListener("change", function () {
       var k = el.getAttribute("data-key");
       state[k] = el.value;
       if (k === "pDate" && state.pDate && (!state.rDate || state.rDate < state.pDate)) state.rDate = addDays(state.pDate, 1);
-      syncDates(el);
+      normaliseReturn();
+      syncDates(k === "rTime" ? el : null);
       refresh();
     });
   });
 
   function syncDates(except) {
+    var opts = returnOptions();
     dateInputs.forEach(function (el) {
       if (el === except) return;
       var k = el.getAttribute("data-key");
+      if (el.tagName === "SELECT") {
+        el.innerHTML = opts.map(function (t) {
+          return '<option value="' + t + '">' + label12(t) + "</option>";
+        }).join("");
+      }
       if (el.value !== state[k]) el.value = state[k] || "";
       if (k === "rDate") el.min = state.pDate || today;
     });
@@ -436,6 +476,7 @@
     root.classList.remove("swap");
   })();
 
+  normaliseReturn();
   syncDates();
   refresh();
 })();

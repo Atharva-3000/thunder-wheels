@@ -116,7 +116,7 @@
                 <label class="sr-only" for="bar-rdate">Return date</label>
                 <input type="date" id="bar-rdate" data-key="rDate" autocomplete="off" required>
                 <label class="sr-only" for="bar-rtime">Return time</label>
-                <input type="time" id="bar-rtime" data-key="rTime" autocomplete="off" step="1800" required>
+                <select id="bar-rtime" data-key="rTime" autocomplete="off" required></select>
               </div>
             </fieldset>
             <div class="datebar-go">
@@ -124,6 +124,7 @@
               <button type="submit" class="btn btn-ink">See bikes</button>
             </div>
           </div>
+          <p class="datebar-note">Rentals run in 12-hour blocks, so return is at your pickup time or 12 hours after it.</p>
           <p class="datebar-error" data-date-error role="alert" hidden></p>
         </form>
       </div>
@@ -482,7 +483,8 @@
           </div>
           <div class="field">
             <label for="f-rtime">Return time</label>
-            <input type="time" id="f-rtime" data-key="rTime" autocomplete="off" step="1800" required>
+            <select id="f-rtime" data-key="rTime" autocomplete="off" aria-describedby="f-rtime-note" required></select>
+            <p class="field-help" id="f-rtime-note">Same time as pickup, or 12 hours later.</p>
           </div>
         </div>
 
