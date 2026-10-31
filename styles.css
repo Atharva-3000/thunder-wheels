@@ -217,6 +217,7 @@ p { margin: 0; }
 }
 .datebar-note { margin-top: 10px; font-size: .875rem; color: var(--muted); }
 .field-help { margin-top: 6px; font-size: .8125rem; color: var(--muted); }
+.est-note { margin-top: 4px; font-size: .8125rem; color: var(--muted); }
 .datebar-error { margin-top: 10px; color: var(--stop); font-weight: 600; font-size: .9375rem; }
 
 /* Shared input look */

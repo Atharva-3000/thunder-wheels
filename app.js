@@ -87,75 +87,53 @@
   try { localStorage.removeItem("tw-dates"); } catch (e) {}
 
 
+  /* Rentals are charged in 12-hour blocks. Visitors can pick any return time;
+     the trip length is rounded UP to the next 12 hours (16 days 2 hours -> 16 days 12 hours),
+     and we tell them how long they can keep the bike for that. */
+  var BLOCK_HOURS = 12;
   function trip() {
     var start = toDate(state.pDate, state.pTime), end = toDate(state.rDate, state.rTime);
     if (!start || !end) return { ok: false, msg: "Add your pickup and return date and time." };
     if (end <= start) return { ok: false, msg: "Return time has to be after pickup." };
     if (start < new Date(Date.now() - 30 * 60 * 1000)) return { ok: false, msg: "Pickup time has already passed. Pick a later time." };
-    var days = Math.max(1, Math.ceil((end - start) / 864e5 - 1e-9));
-    return { ok: true, start: start, end: end, days: days };
+    var actualHours = (end - start) / 36e5;
+    var hours = Math.max(1, Math.ceil(actualHours / BLOCK_HOURS - 1e-9)) * BLOCK_HOURS;   // charged hours
+    var keepUntil = new Date(start.getTime() + hours * 36e5);
+    var days = Math.max(1, Math.ceil(hours / 24));
+    return { ok: true, start: start, end: end, hours: hours, keepUntil: keepUntil, roundedUp: keepUntil - end > 60000, days: days };
   }
   function dayWord(n) { return n + (n === 1 ? " day" : " days"); }
-
-  /* Rentals run in 12-hour blocks: the return time is the pickup time,
-     or 12 hours after it, so every trip is a multiple of 12 hours. */
-  function plus12(time) {
-    var p = time.split(":");
-    return pad((Number(p[0]) + 12) % 24) + ":" + p[1];
-  }
-  function label12(time) {
-    var p = time.split(":"), h = Number(p[0]);
-    return ((h % 12) || 12) + ":" + p[1] + (h < 12 ? " AM" : " PM");
-  }
-  // Valid return times on the chosen return date, earliest first
-  function returnOptions() {
-    if (!state.pTime) return [];
-    var opts = [state.pTime, plus12(state.pTime)].sort();
-    if (state.rDate === state.pDate) opts = opts.filter(function (t) { return t > state.pTime; });
-    return opts;
-  }
-  function normaliseReturn() {
-    if (!state.pDate || !state.pTime) return;
-    if (!state.rDate || state.rDate < state.pDate) state.rDate = addDays(state.pDate, 1);
-    var opts = returnOptions();
-    if (!opts.length) { state.rDate = addDays(state.pDate, 1); opts = returnOptions(); }
-    if (opts.indexOf(state.rTime) < 0) {
-      // keep the trip as close as possible to what was picked: prefer the same time of day as pickup
-      state.rTime = opts.indexOf(state.pTime) >= 0 ? state.pTime : opts[0];
-    }
-  }
-  // Actual trip length, e.g. "12 hours" or "1 day 12 hours" (part hours round up)
+  // Charged trip length, e.g. "12 hours", "1 day", "16 days 12 hours"
   function lengthWord(t) {
-    var hours = Math.ceil((t.end - t.start) / 36e5 - 1e-9);
-    var d = Math.floor(hours / 24), h = hours % 24, parts = [];
+    var d = Math.floor(t.hours / 24), h = t.hours % 24, parts = [];
     if (d) parts.push(dayWord(d));
-    if (h) parts.push(h + (h === 1 ? " hour" : " hours"));
+    if (h) parts.push(h + " hours");
     return parts.join(" ");
+  }
+  // e.g. "Charged in 12-hour blocks, so you can keep the bike until 10:00 PM on Tue, 17 Nov."
+  function blockNote(t) {
+    if (!t || !t.ok) return "Charged in 12-hour blocks.";
+    if (!t.roundedUp) return "Charged in 12-hour blocks.";
+    return "Charged in 12-hour blocks, so you can keep the bike until " + fmtTime(t.keepUntil) + " on " +
+      DAYS[t.keepUntil.getDay()] + ", " + t.keepUntil.getDate() + " " + MONTHS[t.keepUntil.getMonth()] + ".";
   }
 
   var dateInputs = $$("[data-key]");
   dateInputs.forEach(function (el) {
-    if (el.tagName === "INPUT") el.min = today;
+    if (el.type === "date") el.min = today;
     el.addEventListener("change", function () {
       var k = el.getAttribute("data-key");
       state[k] = el.value;
       if (k === "pDate" && state.pDate && (!state.rDate || state.rDate < state.pDate)) state.rDate = addDays(state.pDate, 1);
-      normaliseReturn();
-      syncDates(k === "rTime" ? el : null);
+      syncDates(el);
       refresh();
     });
   });
 
   function syncDates(except) {
-    var opts = returnOptions();
     dateInputs.forEach(function (el) {
       if (el === except) return;
       var k = el.getAttribute("data-key");
-      if (el.tagName === "SELECT") {
-        el.innerHTML = opts.map(function (t) {
-          return '<option value="' + t + '">' + label12(t) + "</option>";
-        }).join("");
-      }
       if (el.value !== state[k]) el.value = state[k] || "";
       if (k === "rDate") el.min = state.pDate || today;
     });
@@ -355,6 +333,7 @@
   function refresh() {
     var t = trip();
     durationEl.textContent = t.ok ? lengthWord(t) : "–";
+    $$("[data-block-note]").forEach(function (el) { el.textContent = blockNote(t); });
     dateErr.hidden = t.ok || !state.pDate || !state.rDate;
     if (!t.ok) dateErr.textContent = t.msg;
     tripSummary.innerHTML = t.ok
@@ -476,7 +455,6 @@
     root.classList.remove("swap");
   })();
 
-  normaliseReturn();
   syncDates();
   refresh();
 })();
