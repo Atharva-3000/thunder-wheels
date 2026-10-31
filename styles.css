@@ -95,6 +95,15 @@ p { margin: 0; }
 .topbar .btn-ink { background: var(--on-ink); color: var(--ink); }
 .topbar .btn-ink:hover { background: #dcdcdc; }
 
+/* Keep the top bar on one line */
+.topnav a, .call-link, .brand { white-space: nowrap; }
+@media (max-width: 1240px) {
+  .topbar-inner { gap: 24px; }
+  .topnav { gap: 20px; }
+  .call-link span { display: none; }
+  .call-link { width: 40px; height: 40px; justify-content: center; border-radius: 50%; background: rgba(255,255,255,.08); }
+}
+
 /* ---------- Hero ---------- */
 .hero { position: relative; background: var(--tint); padding-bottom: 0; }
 .hero::after {               /* the grey ends halfway behind the date bar */

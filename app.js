@@ -443,3 +443,22 @@
   syncDates();
   refresh();
 })();
+
+/* ---------- Review photos ----------
+   A review card gets a photo only if images/reviews/<name>.jpg exists,
+   so there are never empty boxes on the page. */
+(function () {
+  "use strict";
+  Array.prototype.forEach.call(document.querySelectorAll(".review[data-photo]"), function (card) {
+    var img = new Image();
+    img.decoding = "async";
+    img.alt = card.getAttribute("data-photo-alt") || "";
+    img.onload = function () {
+      var fig = document.createElement("figure");
+      fig.className = "review-photo";
+      fig.appendChild(img);
+      card.insertBefore(fig, card.firstChild);
+    };
+    img.src = card.getAttribute("data-photo");
+  });
+})();
