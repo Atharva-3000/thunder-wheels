@@ -485,7 +485,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
   .hero-slides { aspect-ratio: 16 / 11; }
   .hero-photo { margin: 0 8px 0 18px; }
   .fleet { grid-template-columns: repeat(2, 1fr); }
-  .steps, .care-grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr; }
+  .care-grid { grid-template-columns: repeat(2, 1fr); }
   .care-head { grid-template-columns: 1fr; }
   .faq-wrap { grid-template-columns: 1fr; gap: 24px; }
   .find-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -512,7 +513,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
   .datebar-go .btn { max-width: none; }
   .section { padding: 64px 0; }
   .fleet-section { padding-top: 48px; }
-  .fleet { grid-template-columns: 1fr; gap: 18px; }
+  .fleet, .care-grid { grid-template-columns: 1fr; gap: 18px; }
   .filters { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px; padding: 2px 16px 6px; scrollbar-width: none; }
   .filters::-webkit-scrollbar { display: none; }
   .chip { flex: none; }
