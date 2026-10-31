@@ -399,7 +399,7 @@
       root.classList.add("swap");
     }
 
-    // When the yellow bar on the active dot fills up, move to the next bike
+    // When the white bar on the active dot fills up, move to the next bike
     dotsEl.addEventListener("animationend", function (e) {
       if (e.animationName === "dot-fill" && e.target === dots[idx]) show(idx + 1);
     });
