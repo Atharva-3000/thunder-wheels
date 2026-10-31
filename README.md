@@ -33,7 +33,7 @@ Photos live in `images/` with these names (landscape photos work best, about 128
 | Himalayan 411 | `himalayan-411.jpg` |
 | Himalayan 450 | `himalayan-450.jpg` |
 
-The photos in there now are stand-ins from Wikimedia Commons (free to use with credit). Their credits are in the page footer under **Photo credits** and in `images/credits.json`. When you swap in photos of your own bikes, keep the same file names and delete the credits block at the bottom of `index.html`.
+The photos in there now are stand-ins from Wikimedia Commons; their sources and licences are listed in `images/credits.json`. When you swap in photos of your own bikes, keep the same file names.
 
 If a photo is missing, the site shows a simple drawing of a bike or scooter instead.
 
