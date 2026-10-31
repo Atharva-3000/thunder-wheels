@@ -367,6 +367,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
   transition: transform .2s;
 }
 .faq details[open] summary::after { transform: rotate(45deg); }
+.faq details.is-closing summary::after { transform: none; }
 .faq details p { margin: -6px 0 20px; max-width: 40em; color: var(--ink-soft); }
 
 /* ---------- Find us ---------- */

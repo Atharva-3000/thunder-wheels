@@ -335,6 +335,33 @@
     setTimeout(function () { $("#bar-pdate").focus({ preventScroll: true }); }, reduceMotion ? 0 : 400);
   });
 
+  /* ---------- FAQ: answers slide open and shut instead of jumping ---------- */
+  $$(".faq details").forEach(function (d) {
+    var summary = $("summary", d), anim = null;
+    summary.addEventListener("click", function (e) {
+      if (reduceMotion || !d.animate) return;
+      e.preventDefault();
+      var closing = d.open && !d.classList.contains("is-closing");
+      var from = d.offsetHeight, to;
+      if (anim) { anim.onfinish = null; anim.cancel(); }
+      if (closing) {
+        d.classList.add("is-closing");      // turns the × back into + straight away
+        to = summary.offsetHeight + (d.offsetHeight - d.clientHeight);   // summary + borders
+      } else {
+        d.classList.remove("is-closing");
+        d.open = true;
+        to = d.offsetHeight;
+      }
+      d.style.overflow = "hidden";
+      anim = d.animate({ height: [from + "px", to + "px"] }, { duration: 280, easing: "cubic-bezier(.2, .7, .2, 1)" });
+      anim.onfinish = function () {
+        anim = null;
+        d.style.overflow = "";
+        if (closing) { d.open = false; d.classList.remove("is-closing"); }
+      };
+    });
+  });
+
   /* ---------- Hero carousel: the next bike every few seconds ---------- */
   (function heroCarousel() {
     var root = $("[data-hero-carousel]");
