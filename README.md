@@ -52,3 +52,11 @@ The "Find us" section embeds the Google Maps pin for Thunder Wheels Motorcycle R
 ## Putting it online
 
 Drag the whole `thunder-wheels` folder onto Netlify Drop (app.netlify.com/drop), or upload it to any web host. Every file must stay in the same folder.
+
+## Link preview (WhatsApp, iMessage, LinkedIn, X)
+
+When the site link is shared, apps show `og-image.jpg` (1200 × 630) with the title and description set in the `<head>` of `index.html`.
+
+Those apps need full URLs, so Vercel runs `scripts/build.js` on every deploy (set up in `vercel.json`). It copies the site into `dist/` and fills in the live address automatically from Vercel's `VERCEL_PROJECT_PRODUCTION_URL`. That's your vercel.app address, or your own domain once you add one. To force a specific address, add an environment variable `SITE_URL` (for example `https://thunderwheels.in`) in Vercel.
+
+To change the preview picture, replace `og-image.jpg` with another 1200 × 630 JPG under 300 KB. Apps like WhatsApp cache previews, so a change can take a while to show. Add `?v=2` to the link to see the new one straight away.
