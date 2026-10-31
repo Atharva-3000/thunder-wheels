@@ -94,6 +94,14 @@
     return { ok: true, start: start, end: end, days: days };
   }
   function dayWord(n) { return n + (n === 1 ? " day" : " days"); }
+  // Actual trip length, e.g. "12 hours" or "1 day 12 hours" (part hours round up)
+  function lengthWord(t) {
+    var hours = Math.ceil((t.end - t.start) / 36e5 - 1e-9);
+    var d = Math.floor(hours / 24), h = hours % 24, parts = [];
+    if (d) parts.push(dayWord(d));
+    if (h) parts.push(h + (h === 1 ? " hour" : " hours"));
+    return parts.join(" ");
+  }
 
   var dateInputs = $$("input[data-key]");
   dateInputs.forEach(function (el) {
@@ -218,7 +226,7 @@
       estTotal.textContent = rupees(b.price * t.days);
       estDetail.textContent = dayWord(t.days) + " × " + rupees(b.price);
     } else if (!SHOW_PRICES && t.ok) {
-      estTotal.textContent = dayWord(t.days);
+      estTotal.textContent = lengthWord(t);
       estDetail.textContent = fmtShort(t.start) + " to " + fmtShort(t.end);
     } else {
       estTotal.textContent = SHOW_PRICES ? "₹ —" : "—";
@@ -261,12 +269,8 @@
     if (field) { field.classList.add("invalid"); field.focus(); }
   }
 
-  var lastChannel = "whatsapp";
-  $$("[data-channel]", form).forEach(function (b) { b.addEventListener("click", function () { lastChannel = b.getAttribute("data-channel"); }); });
-
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var channel = (e.submitter && e.submitter.getAttribute("data-channel")) || lastChannel;
     formErr.hidden = true;
 
     var b = selectedBike(), t = trip();
@@ -284,13 +288,13 @@
       "Hi Thunder Wheels, I'd like to book a bike.",
       "",
       "Bike: " + b.name + " (" + rupees(b.price) + "/day)",
-      "Duration: " + dayWord(t.days),
+      "Duration: " + lengthWord(t),
       "Estimate: " + rupees(b.price * t.days)
     ] : [
       "Hi Thunder Wheels, I'd like to book a bike. Please send me a quote.",
       "",
       "Bike: " + b.name,
-      "Duration: " + dayWord(t.days)
+      "Duration: " + lengthWord(t)
     ]).concat([
       "",
       "Pickup Date : " + fmtDate(t.start),
@@ -306,24 +310,19 @@
     if (note) lines.push("Note: " + note);
     var text = lines.join("\n");
 
-    if (channel === "email") {
-      var subject = "Booking request: " + b.name + ", " + t.start.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
-      window.location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(text);
-    } else {
-      var url = waLink(text);
-      var win = window.open(url, "_blank");
-      if (win) { try { win.opener = null; } catch (err) {} } else window.location.href = url;
-    }
+    var url = waLink(text);
+    var win = window.open(url, "_blank");
+    if (win) { try { win.opener = null; } catch (err) {} } else window.location.href = url;
   });
 
   /* ---------- Refresh everything that depends on dates ---------- */
   function refresh() {
     var t = trip();
-    durationEl.textContent = t.ok ? dayWord(t.days) : "–";
+    durationEl.textContent = t.ok ? lengthWord(t) : "–";
     dateErr.hidden = t.ok || !state.pDate || !state.rDate;
     if (!t.ok) dateErr.textContent = t.msg;
     tripSummary.innerHTML = t.ok
-      ? (SHOW_PRICES ? "Prices for <strong>" : "Your dates: <strong>") + fmtShort(t.start) + "</strong> to <strong>" + fmtShort(t.end) + "</strong> (" + dayWord(t.days) + "). " +
+      ? (SHOW_PRICES ? "Prices for <strong>" : "Your dates: <strong>") + fmtShort(t.start) + "</strong> to <strong>" + fmtShort(t.end) + "</strong> (" + lengthWord(t) + "). " +
         '<button type="button" data-change-dates>Change dates</button>'
       : (SHOW_PRICES ? "Rent is per day (24 hours). Pick your dates above to see totals." : "Pick your dates above, then choose a bike.");
     renderFleet();

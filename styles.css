@@ -466,8 +466,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
 .est-detail { font-size: .9375rem; color: var(--ink-soft); }
 .plate-lg { font-size: 2rem; padding: 8px 14px 7px; }
 .form-error { margin-bottom: 12px; padding: 10px 12px; border-radius: var(--r-sm); background: var(--stop-bg); color: var(--stop); font-weight: 600; }
-.sheet-actions { display: grid; grid-template-columns: 1.6fr 1fr; gap: 10px; }
+.sheet-actions { display: flex; justify-content: center; }
+.sheet-actions .btn { width: 100%; max-width: 360px; }
 .fine { margin-top: 10px; font-size: .8125rem; color: var(--muted); }
+.sheet-foot .fine { text-align: center; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1020px) {
@@ -537,5 +539,4 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
   }
   @keyframes sheet-in { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
   .sheet-foot { padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
-  .sheet-actions { grid-template-columns: 1fr; }
 }
