@@ -42,6 +42,7 @@ body {
   font: 400 1rem/1.55 var(--body);
   -webkit-font-smoothing: antialiased;
   padding-bottom: var(--mbar-h);
+  overflow-x: clip;   /* safety net: nothing can push the page sideways on phones */
 }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; }
@@ -512,12 +513,11 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
 @media (max-width: 640px) {
   .review-grid-photos, .review-grid-text { grid-template-columns: 1fr; }
   :root { --mbar-h: 76px; }
-  .wrap { padding: 0 16px; }
+  .wrap { padding-left: 16px; padding-right: 16px; }   /* sides only: some .wrap blocks have their own top/bottom padding */
   .topbar-inner { min-height: 58px; gap: 12px; }
   .brand { font-size: 1.35rem; }
   .topbar .brand-logo { width: 36px; height: 36px; }
-  .call-link span { display: none; }
-  .call-link { width: 40px; height: 40px; justify-content: center; border-radius: 50%; background: var(--ink-2); }
+  .call-link { display: none; }   /* the bottom bar has a Call button; keeps the top bar inside narrow screens */
   .hero::after { height: 120px; }
   .hero-grid { padding-top: 32px; padding-bottom: 36px; gap: 28px; }
   .lede { font-size: 1.0625rem; }
@@ -533,12 +533,14 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
   .filters { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px; padding: 2px 16px 6px; scrollbar-width: none; }
   .filters::-webkit-scrollbar { display: none; }
   .chip { flex: none; }
+  .cta-inner { padding-top: 48px; padding-bottom: 48px; }
   .cta-inner .btn, .find-info .btn, .leave-review .btn, .reviews-actions .btn { width: 100%; }
   .leave-review { padding: 22px 20px; }
   .rating-card { width: 100%; }
   .footer-links { margin-left: 0; }
 
   .wa-float { display: none; }
+  .mbar .btn { min-width: 0; padding: 0 16px; }
   .mbar {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 35;
     display: grid; grid-template-columns: auto 1fr; gap: 10px;
@@ -552,4 +554,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
   }
   @keyframes sheet-in { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
   .sheet-foot { padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 359px) {
+  .brand span { display: none; }   /* very small phones: the logo already carries the name */
 }
