@@ -369,7 +369,7 @@
           <p class="section-sub">Pick up your bike from our office. Message us before you come so the bike is ready.</p>
           <ul class="contact-cards">
             <li>
-              <a class="contact-card" data-wa-general href="#" target="_blank" rel="noopener">
+              <a class="contact-card" data-wa-general href="https://wa.me/919664097074" target="_blank" rel="noopener">
                 <span class="cc-icon cc-wa"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg></span>
                 <span><span class="cc-label">WhatsApp</span><span class="cc-value" data-phone-text></span></span>
               </a>
@@ -405,7 +405,7 @@
           <h2 id="cta-title">Not sure which bike to take?</h2>
           <p>Send us your dates and where you're headed. We'll suggest one.</p>
         </div>
-        <a class="btn btn-wa btn-lg" data-wa-general href="#" target="_blank" rel="noopener">
+        <a class="btn btn-wa btn-lg" data-wa-suggest href="https://wa.me/919664097074" target="_blank" rel="noopener">
           <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
           Ask on WhatsApp
         </a>
@@ -441,10 +441,10 @@
     </button>
   </div>
 
-  <!-- Desktop floating WhatsApp -->
-  <a class="wa-float" data-wa-general href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <!-- Desktop floating WhatsApp: opens the booking form, so every message has a bike and dates -->
+  <button type="button" class="wa-float" data-open-booking aria-label="Book on WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
-  </a>
+  </button>
 
   <!-- ============ BOOKING SHEET ============ -->
   <dialog class="sheet" id="booking" aria-labelledby="sheet-title">
@@ -490,22 +490,22 @@
         <div class="row">
           <div class="field">
             <label for="name">Your name</label>
-            <input type="text" id="name" name="fullname" autocomplete="name" required>
+            <input type="text" id="name" name="fullname" autocomplete="name" maxlength="60" required>
           </div>
           <div class="field">
             <label for="phone">Mobile number</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="10-digit number" required>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="10-digit number" maxlength="20" required>
           </div>
         </div>
 
         <div class="field">
-          <label for="area">Where are you riding? <span class="opt">(optional)</span></label>
-          <input type="text" id="area" name="area" placeholder="e.g. city rides, Lonavala, Alibaug">
+          <label for="area">Where are you riding? <span class="opt" data-area-opt>(optional)</span></label>
+          <input type="text" id="area" name="area" placeholder="e.g. city rides, Lonavala, Alibaug" maxlength="80">
         </div>
 
         <div class="field">
           <label for="message">Anything else? <span class="opt">(optional)</span></label>
-          <textarea id="message" name="message" rows="2" placeholder="Trip plan, extra helmet, number of riders…"></textarea>
+          <textarea id="message" name="message" rows="2" maxlength="300" placeholder="Trip plan, extra helmet, number of riders…"></textarea>
         </div>
       </div>
 

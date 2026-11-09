@@ -43,16 +43,19 @@
   }
 
   /* ---------- Contact links ---------- */
-  var GENERAL_WA_TEXT =
-    "Hi Thunder Wheels, I'd like to book a bike.\n\n" +
-    "Bike: \n\n" +
-    "Pickup Date : \n" +
-    "Pickup Time : \n\n" +
-    "Drop Off Date : \n" +
-    "Drop Off Time : ";
+  /* Two buttons open WhatsApp straight away: the "WhatsApp" card in Find us and
+     "Ask on WhatsApp" (Not sure which bike?). Their messages are full sentences, never an
+     empty "Bike: / Pickup Date :" template, which customers sent to us blank.
+     Every "Book" button opens the booking form, which checks bike, dates, name and mobile. */
+  var GENERAL_WA_TEXT = "Hi Thunder Wheels, I have a question: ";
+  // "Not sure which bike to take?" button: a complete message that makes sense even if sent as it is
+  var SUGGEST_WA_TEXT =
+    "Hi Thunder Wheels, I want to book a bike but I'm not sure which one to take. " +
+    "Can you please suggest one? I'll share my dates and where I'm riding.";
   function waLink(text) { return "https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(text); }
 
   $$("[data-wa-general]").forEach(function (a) { a.href = waLink(GENERAL_WA_TEXT); });
+  $$("[data-wa-suggest]").forEach(function (a) { a.href = waLink(SUGGEST_WA_TEXT); });
   $$("[data-phone]").forEach(function (a) { a.href = "tel:" + CONTACT.phoneLink; });
   $$("[data-phone-text]").forEach(function (s) { s.textContent = CONTACT.phoneDisplay; });
   $$("[data-email]").forEach(function (a) { a.href = "mailto:" + CONTACT.email; });
@@ -223,15 +226,19 @@
   var formErr = $("[data-form-error]");
   var lastFocus = null;
 
+  var SUGGEST = "suggest";   // "Not sure, suggest one for me" option in the bike list
   bikeSel.innerHTML = '<option value="">Choose a bike</option>' + BIKES.map(function (b) {
     return '<option value="' + b.id + '">' + b.name + (SHOW_PRICES ? " (" + rupees(b.price) + "/day)" : "") + "</option>";
-  }).join("");
+  }).join("") + '<option value="' + SUGGEST + '">Not sure, suggest one for me</option>';
 
   function selectedBike() { return BIKES.filter(function (b) { return b.id === bikeSel.value; })[0] || null; }
+  function wantsSuggestion() { return bikeSel.value === SUGGEST; }
+  var areaOpt = $("[data-area-opt]");
 
   function updateSheet() {
-    var b = selectedBike(), t = trip();
-    sheetTitle.textContent = b ? b.name : "Choose a bike";
+    var b = selectedBike(), t = trip(), suggest = wantsSuggestion();
+    sheetTitle.textContent = b ? b.name : suggest ? "Help me choose a bike" : "Choose a bike";
+    areaOpt.textContent = suggest ? "(so we can suggest a bike)" : "(optional)";
     sheetThumb.innerHTML = "";
     if (b) photoInto(sheetThumb, b);
 
@@ -244,7 +251,7 @@
       estDetail.textContent = fmtShort(t.start) + " to " + fmtShort(t.end);
     } else {
       estTotal.textContent = SHOW_PRICES ? "₹ —" : "—";
-      estDetail.textContent = !t.ok ? t.msg : "Choose a bike to see the price";
+      estDetail.textContent = !t.ok ? t.msg : suggest ? "We'll suggest a bike and send the price" : "Choose a bike to see the price";
     }
 
   }
@@ -258,7 +265,7 @@
     if (typeof sheet.showModal === "function") sheet.showModal(); else sheet.setAttribute("open", "");
     document.documentElement.style.overflow = "hidden";
     setTimeout(function () {
-      var first = !bikeSel.value ? bikeSel : !$("#name").value ? $("#name") : $("#phone");
+      var first = !bikeSel.value ? bikeSel : wantsSuggestion() && !$("#area").value.trim() ? $("#area") : !$("#name").value.trim() ? $("#name") : $("#phone");
       first.focus({ preventScroll: true });
     }, 60);
   }
@@ -268,7 +275,9 @@
     if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
   });
 
-  $$("[data-open-booking]").forEach(function (b) { b.addEventListener("click", function () { openBooking(null); }); });
+  $$("[data-open-booking]").forEach(function (b) {
+    b.addEventListener("click", function () { openBooking(b.getAttribute("data-open-booking") || null); });
+  });
   $("[data-close]", sheet).addEventListener("click", closeBooking);
   sheet.addEventListener("click", function (e) { if (e.target === sheet) closeBooking(); });   // click on backdrop
   bikeSel.addEventListener("change", updateSheet);
@@ -287,18 +296,25 @@
     e.preventDefault();
     formErr.hidden = true;
 
-    var b = selectedBike(), t = trip();
-    var nameEl = $("#name"), phoneEl = $("#phone");
-    var name = nameEl.value.trim();
+    var b = selectedBike(), t = trip(), suggest = wantsSuggestion();
+    var nameEl = $("#name"), phoneEl = $("#phone"), areaEl = $("#area");
+    var clean = function (v) { return v.replace(/\s+/g, " ").trim(); };   // one line per field in the message
+    var name = clean(nameEl.value);
     var phone = phoneEl.value.replace(/\D/g, "").replace(/^(91|0)(?=\d{10}$)/, "");
+    var area = clean(areaEl.value), note = $("#message").value.trim();
 
-    if (!b) return fail("Choose a bike.", bikeSel);
+    if (!b && !suggest) return fail("Choose a bike, or pick \u201cNot sure, suggest one for me\u201d.", bikeSel);
     if (!t.ok) return fail(t.msg, $("#f-pdate"));
-    if (!name) return fail("Add your name.", nameEl);
-    if (phone.length !== 10) return fail("Enter a 10-digit mobile number.", phoneEl);
+    if (suggest && area.length < 2) return fail("Tell us where you're riding so we can suggest a bike.", areaEl);
+    if (name.length < 2) return fail("Add your name.", nameEl);
+    if (!/^[6-9]\d{9}$/.test(phone)) return fail("Enter a valid 10-digit mobile number.", phoneEl);
 
-    var area = $("#area").value.trim(), note = $("#message").value.trim();
-    var lines = (SHOW_PRICES ? [
+    var lines = suggest ? [
+      "Hi Thunder Wheels, I'm not sure which bike to take. Please suggest one and send me a quote.",
+      "",
+      "Bike: Please suggest",
+      "Duration: " + lengthWord(t)
+    ] : (SHOW_PRICES ? [
       "Hi Thunder Wheels, I'd like to book a bike.",
       "",
       "Bike: " + b.name + " (" + rupees(b.price) + "/day)",
@@ -309,7 +325,8 @@
       "",
       "Bike: " + b.name,
       "Duration: " + lengthWord(t)
-    ]).concat([
+    ]);
+    lines = lines.concat([
       "",
       "Pickup Date : " + fmtDate(t.start),
       "Pickup Time : " + fmtTime(t.start),

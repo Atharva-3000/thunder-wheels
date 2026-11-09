@@ -430,6 +430,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--i
   width: 58px; height: 58px; border-radius: 50%;
   display: grid; place-items: center; background: var(--wa); color: #fff;
   box-shadow: 0 10px 24px -8px rgba(0, 0, 0, .45);
+  border: 0; padding: 0; cursor: pointer;
 }
 .wa-float svg { width: 30px; height: 30px; }
 .wa-float:hover { background: var(--wa-deep); }

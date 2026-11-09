@@ -41,9 +41,23 @@ If a photo is missing, the site shows a simple drawing of a bike or scooter inst
 
 1. The visitor sets pickup and return date and time in the bar under the hero.
 2. They press **Book** on a bike. A booking form slides up with the bike and dates already filled in.
-3. They add name and mobile and press **Send on WhatsApp**. WhatsApp opens with the bike, dates, how many days, name and number typed out (plus the estimate, when prices are switched on), addressed to +91 96640 97074. **Send by email** does the same to thunderwheels2017@gmail.com.
+3. They add name and mobile and press **Send on WhatsApp**. WhatsApp opens with the bike, dates, trip length, name and number typed out (plus the estimate, when prices are switched on), addressed to +91 96640 97074.
 
-No server is needed. Every started 24 hours counts as one day. The browser remembers the visitor's dates if they come back.
+The form won't open WhatsApp until it has a bike, valid dates, a name and a valid 10-digit Indian mobile number.
+
+### Where each WhatsApp button goes
+
+| Button | What happens |
+| --- | --- |
+| **Book a bike** (header), **Book …** (each bike), **Book on WhatsApp** (mobile bar), round green button (desktop) | Opens the booking form |
+| **Ask on WhatsApp** ("Not sure which bike to take?") | Opens WhatsApp straight away with: "Hi Thunder Wheels, I want to book a bike but I'm not sure which one to take. Can you please suggest one? I'll share my dates and where I'm riding." |
+| **WhatsApp** card in *Find us* | Opens WhatsApp straight away, for questions. It starts with "Hi Thunder Wheels, I have a question:" |
+
+Neither of these ever sends a blank booking template. The booking form also has a *Not sure, suggest one for me* option in the bike list; with that picked, "Where are you riding?" is required.
+
+The message is typed into WhatsApp for the visitor, but they can still edit it, delete it, or message the number directly. A website can't stop that. The form only makes sure that the message it builds is complete.
+
+No server is needed. Rentals are charged in 12-hour blocks: any return time is allowed and the trip length is rounded up to the next 12 hours. Dates start fresh on every visit.
 
 ## Map
 
